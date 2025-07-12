@@ -84,8 +84,3 @@ export default function Home() {
     </main>
   );
 }
-
-      {message && <p style={{ marginTop: "1rem" }}>{message}</p>}
-    </main>
-  );
-}
