@@ -3,6 +3,7 @@ import { useState } from "react";
 
 export default function Home() {
   const [formData, setFormData] = useState({
+    from: "",
     to: "",
     subject: "",
     text: "",
@@ -27,8 +28,20 @@ export default function Home() {
 
   return (
     <main style={{ padding: "2rem", maxWidth: "600px", margin: "0 auto" }}>
-      <h1 style={{ fontSize: "2rem", marginBottom: "1rem" }}>Odeslat e-mail (Sendinblue test)</h1>
+      <h1 style={{ fontSize: "2rem", marginBottom: "1rem" }}>AIM Email SaaS</h1>
       <form onSubmit={handleSubmit}>
+        <div>
+          <label>Email odesílatele:</label>
+          <input
+            type="email"
+            name="from"
+            value={formData.from}
+            onChange={handleChange}
+            required
+            placeholder="Zadejte svůj e-mail"
+            style={{ width: "100%", padding: "8px", marginBottom: "1rem" }}
+          />
+        </div>
         <div>
           <label>Email příjemce:</label>
           <input
@@ -37,6 +50,7 @@ export default function Home() {
             value={formData.to}
             onChange={handleChange}
             required
+            placeholder="Zadejte příjemce"
             style={{ width: "100%", padding: "8px", marginBottom: "1rem" }}
           />
         </div>
@@ -48,22 +62,29 @@ export default function Home() {
             value={formData.subject}
             onChange={handleChange}
             required
+            placeholder="Zadejte předmět e-mailu"
             style={{ width: "100%", padding: "8px", marginBottom: "1rem" }}
           />
         </div>
         <div>
-          <label>Zpráva:</label>
+          <label>Obsah e-mailu:</label>
           <textarea
             name="text"
             value={formData.text}
             onChange={handleChange}
             required
             rows={5}
+            placeholder="Zadejte text e-mailu"
             style={{ width: "100%", padding: "8px", marginBottom: "1rem" }}
           />
         </div>
-        <button type="submit" style={{ padding: "10px 20px" }}>Odeslat</button>
+        <button type="submit" style={{ padding: "10px 20px" }}>Odeslat e-mail</button>
       </form>
+      {message && <p style={{ marginTop: "1rem" }}>{message}</p>}
+    </main>
+  );
+}
+
       {message && <p style={{ marginTop: "1rem" }}>{message}</p>}
     </main>
   );
