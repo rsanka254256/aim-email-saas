@@ -28,55 +28,27 @@ export default function Home() {
 
   return (
     <main style={{ padding: "2rem", maxWidth: "600px", margin: "0 auto" }}>
-      <h1 style={{ fontSize: "2rem", marginBottom: "1rem" }}>AIM Email SaaS</h1>
+      <h1>AIM Email SaaS</h1>
       <form onSubmit={handleSubmit}>
         <div>
-          <label>Email odesílatele:</label>
-          <input
-            type="email"
-            name="from"
-            value={formData.from}
-            onChange={handleChange}
-            required
-            style={{ width: "100%", padding: "8px", marginBottom: "1rem" }}
-          />
+          <label>Odesílatel:</label>
+          <input type="email" name="from" value={formData.from} onChange={handleChange} required />
         </div>
         <div>
-          <label>Email příjemce:</label>
-          <input
-            type="email"
-            name="to"
-            value={formData.to}
-            onChange={handleChange}
-            required
-            style={{ width: "100%", padding: "8px", marginBottom: "1rem" }}
-          />
+          <label>Příjemce:</label>
+          <input type="email" name="to" value={formData.to} onChange={handleChange} required />
         </div>
         <div>
           <label>Předmět:</label>
-          <input
-            type="text"
-            name="subject"
-            value={formData.subject}
-            onChange={handleChange}
-            required
-            style={{ width: "100%", padding: "8px", marginBottom: "1rem" }}
-          />
+          <input type="text" name="subject" value={formData.subject} onChange={handleChange} required />
         </div>
         <div>
-          <label>Obsah e-mailu:</label>
-          <textarea
-            name="text"
-            value={formData.text}
-            onChange={handleChange}
-            required
-            rows={5}
-            style={{ width: "100%", padding: "8px", marginBottom: "1rem" }}
-          />
+          <label>Zpráva:</label>
+          <textarea name="text" value={formData.text} onChange={handleChange} rows={5} required />
         </div>
-        <button type="submit" style={{ padding: "10px 20px" }}>Odeslat e-mail</button>
+        <button type="submit">Odeslat</button>
       </form>
-      {message && <p style={{ marginTop: "1rem" }}>{message}</p>}
+      {message && <p>{message}</p>}
     </main>
   );
 }
