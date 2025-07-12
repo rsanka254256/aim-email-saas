@@ -3,36 +3,42 @@ import nodemailer from 'nodemailer';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method not allowed' });
+    return res.status(405).json({ message: 'Method not allowed' });
   }
 
   const { to, subject, text } = req.body;
 
   if (!to || !subject || !text) {
-    return res.status(400).json({ error: 'Missing required fields: to, subject, text' });
+    return res.status(400).json({ message: 'Missing fields in request body' });
   }
 
-  try {
-    const transporter = nodemailer.createTransport({
-      host: 'smtp-relay.brevo.com',
-      port: 587,
-      secure: false,
-      auth: {
-        user: 'richardsanka16@gmail.com',
-        pass: 'xsmtpsib-3d389306139eeae178cae6e0cf11ae71775ef6620d0bd2483b13afe9db340251-Ar2RU16FTv9MEzKV'
-      }
-    });
+  const smtpUser = process.env.SMTP_USER;
+  const smtpPass = process.env.SMTP_PASS;
 
-    const info = await transporter.sendMail({
-      from: '"AIM Email SaaS" <richardsanka16@gmail.com>',
+  if (!smtpUser || !smtpPass) {
+    return res.status(500).json({ message: 'SMTP credentials are missing in environment variables' });
+  }
+
+  const transporter = nodemailer.createTransport({
+    host: 'smtp-relay.sendinblue.com',
+    port: 587,
+    auth: {
+      user: smtpUser,
+      pass: smtpPass,
+    },
+  });
+
+  try {
+    await transporter.sendMail({
+      from: smtpUser,
       to,
       subject,
-      text
+      text,
     });
 
-    return res.status(200).json({ success: true, messageId: info.messageId });
-  } catch (error: any) {
-    console.error('Email send error:', error);
-    return res.status(500).json({ error: 'Failed to send email', details: error.message });
+    return res.status(200).json({ message: 'Email sent successfully' });
+  } catch (error) {
+    console.error('Send error:', error);
+    return res.status(500).json({ message: 'Failed to send email', error });
   }
 }
