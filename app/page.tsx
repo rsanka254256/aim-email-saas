@@ -1,84 +1,49 @@
-'use client'
+"use client";
+import { useState } from "react";
 
-import { useState } from 'react'
+export default function Home() {
+  const [formData, setFormData] = useState({
+    to: "",
+    subject: "",
+    text: "",
+  });
+  const [message, setMessage] = useState("");
 
-export default function HomePage() {
-  const [to, setTo] = useState('')
-  const [subject, setSubject] = useState('')
-  const [text, setText] = useState('')
-  const [message, setMessage] = useState('')
-  const [loading, setLoading] = useState(false)
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setMessage('')
-    setLoading(true)
+    e.preventDefault();
+    const res = await fetch("/api/send", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(formData),
+    });
 
-    const res = await fetch('/api/send', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ to, subject, text }),
-    })
-
-    const data = await res.json()
-    setLoading(false)
-
-    if (res.ok) {
-      setMessage('E-mail byl úspěšně odeslán.')
-      setTo('')
-      setSubject('')
-      setText('')
-    } else {
-      setMessage(`Chyba: ${data.message || 'Nepodařilo se odeslat e-mail'}`)
-    }
-  }
+    const data = await res.json();
+    setMessage(data.message || "❌ Nepodařilo se odeslat e-mail");
+  };
 
   return (
-    <form onSubmit={handleSubmit} className="max-w-xl mx-auto mt-12 space-y-4">
-      <div>
-        <label className="block mb-1 font-semibold">Komu</label>
-        <input
-          type="email"
-          className="w-full p-2 border border-gray-300 rounded"
-          value={to}
-          onChange={(e) => setTo(e.target.value)}
-          required
-        />
-      </div>
-
-      <div>
-        <label className="block mb-1 font-semibold">Předmět</label>
-        <input
-          type="text"
-          className="w-full p-2 border border-gray-300 rounded"
-          value={subject}
-          onChange={(e) => setSubject(e.target.value)}
-          required
-        />
-      </div>
-
-      <div>
-        <label className="block mb-1 font-semibold">Zpráva</label>
-        <textarea
-          className="w-full p-2 border border-gray-300 rounded"
-          value={text}
-          onChange={(e) => setText(e.target.value)}
-          rows={5}
-          required
-        />
-      </div>
-
-      <button
-        type="submit"
-        className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 disabled:opacity-50"
-        disabled={loading}
-      >
-        {loading ? 'Odesílání...' : 'Odeslat e-mail'}
-      </button>
-
-      {message && <p className="mt-4 text-center">{message}</p>}
-    </form>
-  )
+    <main style={{ padding: "2rem", maxWidth: "600px", margin: "0 auto" }}>
+      <h1 style={{ fontSize: "2rem", marginBottom: "1rem" }}>Odeslat e-mail (Sendinblue test)</h1>
+      <form onSubmit={handleSubmit}>
+        <div>
+          <label>Email příjemce:</label>
+          <input type="email" name="to" value={formData.to} onChange={handleChange} required style={{ width: "100%", padding: "8px", marginBottom: "1rem" }} />
+        </div>
+        <div>
+          <label>Předmět:</label>
+          <input type="text" name="subject" value={formData.subject} onChange={handleChange} required style={{ width: "100%", padding: "8px", marginBottom: "1rem" }} />
+        </div>
+        <div>
+          <label>Zpráva:</label>
+          <textarea name="text" value={formData.text} onChange={handleChange} required rows={5} style={{ width: "100%", padding: "8px", marginBottom: "1rem" }} />
+        </div>
+        <button type="submit" style={{ padding: "10px 20px" }}>Odeslat</button>
+      </form>
+      {message && <p style={{ marginTop: "1rem" }}>{message}</p>}
+    </main>
+  );
 }
