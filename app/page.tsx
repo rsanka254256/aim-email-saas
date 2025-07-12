@@ -38,7 +38,6 @@ export default function Home() {
             value={formData.from}
             onChange={handleChange}
             required
-            placeholder="Zadejte svůj e-mail"
             style={{ width: "100%", padding: "8px", marginBottom: "1rem" }}
           />
         </div>
@@ -50,7 +49,6 @@ export default function Home() {
             value={formData.to}
             onChange={handleChange}
             required
-            placeholder="Zadejte příjemce"
             style={{ width: "100%", padding: "8px", marginBottom: "1rem" }}
           />
         </div>
@@ -62,7 +60,6 @@ export default function Home() {
             value={formData.subject}
             onChange={handleChange}
             required
-            placeholder="Zadejte předmět e-mailu"
             style={{ width: "100%", padding: "8px", marginBottom: "1rem" }}
           />
         </div>
@@ -74,7 +71,6 @@ export default function Home() {
             onChange={handleChange}
             required
             rows={5}
-            placeholder="Zadejte text e-mailu"
             style={{ width: "100%", padding: "8px", marginBottom: "1rem" }}
           />
         </div>
