@@ -31,19 +31,35 @@ export default function Home() {
       <form onSubmit={handleSubmit}>
         <div>
           <label>Email příjemce:</label>
-          <input type="email" name="to" value={formData.to} onChange={handleChange} required style={{ width: "100%", padding: "8px", marginBottom: "1rem" }} />
+          <input
+            type="email"
+            name="to"
+            value={formData.to}
+            onChange={handleChange}
+            required
+            style={{ width: "100%", padding: "8px", marginBottom: "1rem" }}
+          />
         </div>
         <div>
           <label>Předmět:</label>
-          <input type="text" name="subject" value={formData.subject} onChange={handleChange} required style={{ width: "100%", padding: "8px", marginBottom: "1rem" }} />
+          <input
+            type="text"
+            name="subject"
+            value={formData.subject}
+            onChange={handleChange}
+            required
+            style={{ width: "100%", padding: "8px", marginBottom: "1rem" }}
+          />
         </div>
         <div>
           <label>Zpráva:</label>
-          <textarea name="text" value={formData.text} onChange={handleChange} required rows={5} style={{ width: "100%", padding: "8px", marginBottom: "1rem" }} />
+          <textarea
+            name="text"
+            value={formData.text}
+            onChange={handleChange}
+            required
+            rows={5}
+            style={{ width: "100%", padding: "8px", marginBottom: "1rem" }}
+          />
         </div>
-        <button type="submit" style={{ padding: "10px 20px" }}>Odeslat</button>
-      </form>
-      {message && <p style={{ marginTop: "1rem" }}>{message}</p>}
-    </main>
-  );
-}
+        <button type="submit" style={{ padding: "10px 20
