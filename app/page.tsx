@@ -62,4 +62,9 @@ export default function Home() {
             style={{ width: "100%", padding: "8px", marginBottom: "1rem" }}
           />
         </div>
-        <button type="submit" style={{ padding: "10px 20
+        <button type="submit" style={{ padding: "10px 20px" }}>Odeslat</button>
+      </form>
+      {message && <p style={{ marginTop: "1rem" }}>{message}</p>}
+    </main>
+  );
+}
